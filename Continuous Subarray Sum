@@ -1,0 +1,32 @@
+#include <vector>
+#include <unordered_map>
+
+class Solution {
+public:
+    bool checkSubarraySum(std::vector<int>& nums, int k) {
+        // Map to store remainder and its first occurrence index
+        std::unordered_map<int, int> remainderMap;
+        remainderMap[0] = -1; // Handle the case where the subarray starts from index 0
+
+        int prefixSum = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            prefixSum += nums[i];
+            
+            // Handle k=0 case
+            int remainder = k == 0 ? prefixSum : prefixSum % k;
+            
+            // Check if the remainder has been seen before
+            if (remainderMap.count(remainder)) {
+                // If the subarray has at least two elements
+                if (i - remainderMap[remainder] > 1) {
+                    return true;
+                }
+            } else {
+                // Store the first occurrence of this remainder
+                remainderMap[remainder] = i;
+            }
+        }
+        
+        return false;
+    }
+};

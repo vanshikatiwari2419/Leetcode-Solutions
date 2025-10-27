@@ -1,0 +1,13 @@
+int minStartValue(vector<int>& nums) {
+        int prefixSum=0;
+        int minPrefix=INT_MAX;
+
+        for(int x:nums) {
+            prefixSum+=x;
+            minPrefix=min(minPrefix,prefixSum);
+        }
+        if(minPrefix<0)
+        return 1-minPrefix;
+        else
+        return 1;
+    }
